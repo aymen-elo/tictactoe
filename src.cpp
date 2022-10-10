@@ -44,9 +44,11 @@ void afficher(char** T, int cl, int ln){
     }
 }
 
-void playRound(char** & T, Player A, Player B, int i, int j){
+//fix: find when a player has won
+void playRound(char** & T, Player A, Player B){
     if((A.hasWon == false) && (B.hasWon == false)){
         if(A.isTurn){
+            int i, j;
             cout<<"Joueur 1, entrez la Ligne "<<endl;
             cin>>i;
             cout<<"Joueur 1, entrez la Cologne "<<endl;
@@ -59,6 +61,7 @@ void playRound(char** & T, Player A, Player B, int i, int j){
             A.isTurn = false;
             B.isTurn = true;
         }else{
+            int i, j;
             cout<<"Joueur 2, entrez la Ligne "<<endl;
             cin>>i;
             cout<<"Joueur 2, entrez la Cologne "<<endl;
@@ -67,7 +70,7 @@ void playRound(char** & T, Player A, Player B, int i, int j){
             while(T[i][j] != ' '){
                 cout<<"Position deja occupée !!! >:("<<endl;
             }
-            T[i-1][j-1] = A.symbol;
+            T[i-1][j-1] = B.symbol;
             B.isTurn = false;
             A.isTurn = true;
         }
@@ -90,7 +93,7 @@ for(int i = 0; i < cols; i++){
 selectSymbol(p1.symbol, p2.symbol);
 emptyFill(tab, cols, lns); 
 afficher(tab, cols, lns);
-
+playRound(tab, p1, p2);
 
 
 
