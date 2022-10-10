@@ -77,7 +77,7 @@ void win(char** T, Player & p, int N){ // N for number of rows/lines to set the 
 }
 
 //fix: find when a player has won
-void playRound(char** & T, Player A, Player B){
+void playRound(char** & T, Player A, Player B, int N){
     if((A.hasWon == false) && (B.hasWon == false)){
         if(A.isTurn){
             int i, j;
@@ -92,6 +92,10 @@ void playRound(char** & T, Player A, Player B){
             T[i-1][j-1] = A.symbol;
             A.isTurn = false;
             B.isTurn = true;
+            win(T, A, N); //did the player win ?
+            if(A.hasWon){
+                cout<<"Félicitations Joueur 1, Alias "<<A.symbol<<", c'est gagné !"<<endl;
+            }
         }else{
             int i, j;
             cout<<"Joueur 2, entrez la Ligne "<<endl;
@@ -100,13 +104,18 @@ void playRound(char** & T, Player A, Player B){
             cin>>j;
             
             while(T[i][j] != ' '){
-                cout<<"Position deja occupée !!! >:("<<endl;
+                cout<<"Position deja occupee !!! >:("<<endl;
             }
             T[i-1][j-1] = B.symbol;
             B.isTurn = false;
             A.isTurn = true;
+            win(T, B, N);
+            if(A.hasWon){
+                cout<<"Félicitations Joueur 2, Alias "<<B.symbol<<", c'est gagné !"<<endl;
+            }
         }
     }
+    afficher(T, N, N); // N represents cols and lns at once
 }
 
 
@@ -126,6 +135,9 @@ selectSymbol(p1.symbol, p2.symbol);
 emptyFill(tab, cols, lns); 
 afficher(tab, cols, lns);
 
+// cols or lns, they have the same value
+p1.isTurn == true;
+playRound(tab, p1, p2, cols); 
 
 
 
