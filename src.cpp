@@ -65,7 +65,7 @@ void win(char** T, Player & p, int N){ // N for number of rows/lines to set the 
     }
     verif = 0;
 
-    for(int i, j; i < N, j < N; j++, i++){
+    for(int i = 0, j = 0; i < N, j < N; j++, i++){
         if(T[i][j] == p.symbol){
             verif=+1;
         }
