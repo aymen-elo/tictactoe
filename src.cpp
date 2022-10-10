@@ -44,6 +44,38 @@ void afficher(char** T, int cl, int ln){
     }
 }
 
+void win(char** T, Player & p, int N){ // N for number of rows/lines to set the for loop limit
+    int verif = 0;
+    for(int j = 0; j < N; j++){
+        if(T[0][j] == p.symbol){
+            verif=+1;
+        }
+    }
+    if(verif == N){
+        p.hasWon = true;
+    }
+    verif = 0;
+    for(int i = 0; i < N; i++){
+        if(T[0][i] == p.symbol){
+            verif=+1;
+        }
+    }
+    if(verif == N){
+        p.hasWon = true;
+    }
+    verif = 0;
+
+    for(int i, j; i < N, j < N; j++, i++){
+        if(T[i][j] == p.symbol){
+            verif=+1;
+        }
+    }
+    if(verif == N){
+        p.hasWon = true;
+    }
+
+}
+
 //fix: find when a player has won
 void playRound(char** & T, Player A, Player B){
     if((A.hasWon == false) && (B.hasWon == false)){
@@ -93,7 +125,6 @@ for(int i = 0; i < cols; i++){
 selectSymbol(p1.symbol, p2.symbol);
 emptyFill(tab, cols, lns); 
 afficher(tab, cols, lns);
-playRound(tab, p1, p2);
 
 
 
