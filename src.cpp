@@ -2,10 +2,10 @@
 using namespace std;
 
 
-void fillTest(char** & T, int ln, int cl){
+void emptyFill(char** & T, int ln, int cl){
     for(int i = 0; i < ln; i++){
         for(int j = 0; j < cl; j++){
-            T[i][j] = 'x';
+            T[i][j] = ' ';
         }
     }
 }
@@ -45,7 +45,7 @@ tab = new char*[cols];
 for(int i = 0; i < cols; i++){
     tab[i] = new char[lns];
 }
-fillTest(tab, cols, lns);
+emptyFill(tab, cols, lns); 
 afficher(tab, cols, lns);
 
 
