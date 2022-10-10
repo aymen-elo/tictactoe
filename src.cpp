@@ -61,14 +61,3 @@ delete[] tab;
 
 
 }
-/*for(int i = 0; i < ln; i++ ){
-        cout<<'|';
-        for(int j = 0; j < cl; j++){
-            cout<<T[j]<<'|';
-        }
-        cout<<endl<<'-';
-        for(int k = 0; k < cl; k++){
-            cout<<"--";
-        }
-        cout<<endl;
-    }*/
