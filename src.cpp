@@ -17,6 +17,13 @@ void saisieTaille(int & cl, int & ln){
     ln = cl;
 }
 
+void selectSymbol(char & A, char & B){
+    cout<<"Quelle caractere pour le joueur 1 ? "<<endl;
+    cin>>A;
+    cout<<"Quelle caractere pour le joueur 2 ? "<<endl;
+    cin>>B;
+}
+
 void afficher(char** T, int cl, int ln){
     for(int i = 0; i < ln; i++){
         cout<<'|';
@@ -37,6 +44,7 @@ int main(){
 
 
 int cols, lns;
+char symbolA, symbolB;
 saisieTaille(cols, lns);
 
 //alloc
@@ -45,6 +53,7 @@ tab = new char*[cols];
 for(int i = 0; i < cols; i++){
     tab[i] = new char[lns];
 }
+selectSymbol(symbolA, symbolB);
 emptyFill(tab, cols, lns); 
 afficher(tab, cols, lns);
 
