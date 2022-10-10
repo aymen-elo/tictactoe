@@ -1,6 +1,16 @@
 #include <iostream>
 using namespace std;
 
+
+void fillTest(char** & T, int ln, int cl){
+    for(int i = 0; i < ln; i++){
+        for(int j = 0; j < cl; j++){
+            T[i][j] = 'x';
+        }
+    }
+}
+
+//fix: when size<=2
 void saisieTaille(int & cl, int & ln){
     cout << "Morpion de taille NxN, saisir N: "<<endl;
     cin>>cl;
@@ -8,12 +18,17 @@ void saisieTaille(int & cl, int & ln){
 }
 
 void afficher(char** T, int cl, int ln){
-    for(int i = 0; i < ln; i++ ){
+    for(int i = 0; i < ln; i++){
         cout<<'|';
         for(int j = 0; j < cl; j++){
-            cout<<T[j]<<'|';
+            cout<<T[i][j]<<'|';
         }
-
+        cout<<endl;
+        cout<<'-';
+        for(int j = 0; j < cl; j++){
+            cout<<"--";
+        }
+        cout<<endl;
     }
 }
 
@@ -30,7 +45,8 @@ tab = new char*[cols];
 for(int i = 0; i < cols; i++){
     tab[i] = new char[lns];
 }
-
+fillTest(tab, cols, lns);
+afficher(tab, cols, lns);
 
 
 
@@ -45,3 +61,14 @@ delete[] tab;
 
 
 }
+/*for(int i = 0; i < ln; i++ ){
+        cout<<'|';
+        for(int j = 0; j < cl; j++){
+            cout<<T[j]<<'|';
+        }
+        cout<<endl<<'-';
+        for(int k = 0; k < cl; k++){
+            cout<<"--";
+        }
+        cout<<endl;
+    }*/
