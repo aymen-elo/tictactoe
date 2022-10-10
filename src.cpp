@@ -1,6 +1,10 @@
 #include <iostream>
 using namespace std;
 
+struct Player{
+    char symbol;
+    bool isTurn;
+};
 
 void emptyFill(char** & T, int ln, int cl){
     for(int i = 0; i < ln; i++){
@@ -39,12 +43,15 @@ void afficher(char** T, int cl, int ln){
     }
 }
 
+void playRound(){
+
+}
+
 
 int main(){
 
-
+Player p1, p2;
 int cols, lns;
-char symbolA, symbolB;
 saisieTaille(cols, lns);
 
 //alloc
@@ -53,7 +60,7 @@ tab = new char*[cols];
 for(int i = 0; i < cols; i++){
     tab[i] = new char[lns];
 }
-selectSymbol(symbolA, symbolB);
+selectSymbol(p1.symbol, p2.symbol);
 emptyFill(tab, cols, lns); 
 afficher(tab, cols, lns);
 
