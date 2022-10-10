@@ -4,6 +4,7 @@ using namespace std;
 struct Player{
     char symbol;
     bool isTurn;
+    bool hasWon;
 };
 
 void emptyFill(char** & T, int ln, int cl){
@@ -43,8 +44,34 @@ void afficher(char** T, int cl, int ln){
     }
 }
 
-void playRound(){
-
+void playRound(char** & T, Player A, Player B, int i, int j){
+    if((A.hasWon == false) && (B.hasWon == false)){
+        if(A.isTurn){
+            cout<<"Joueur 1, entrez la Ligne "<<endl;
+            cin>>i;
+            cout<<"Joueur 1, entrez la Cologne "<<endl;
+            cin>>j;
+            
+            while(T[i][j] != ' '){
+                cout<<"Position deja occupée !!! >:("<<endl;
+            }
+            T[i-1][j-1] = A.symbol;
+            A.isTurn = false;
+            B.isTurn = true;
+        }else{
+            cout<<"Joueur 2, entrez la Ligne "<<endl;
+            cin>>i;
+            cout<<"Joueur 2, entrez la Cologne "<<endl;
+            cin>>j;
+            
+            while(T[i][j] != ' '){
+                cout<<"Position deja occupée !!! >:("<<endl;
+            }
+            T[i-1][j-1] = A.symbol;
+            B.isTurn = false;
+            A.isTurn = true;
+        }
+    }
 }
 
 
