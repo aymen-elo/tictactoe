@@ -22,7 +22,7 @@ void emptyFill(char** & T, int ln, int cl){
     }
 }
 
-//fix: when size<=2
+
 void saisieTaille(int & cl, int & ln){
     cl = 0;
     while(cl < 3){
@@ -111,18 +111,28 @@ void winCase(char** T, Player & p, int N){ // N for number of rows/lines to set 
     }
 }
 
+//checks weither a case was already checked before being inserted
+void fillIfEmpty(char** & TAB, Player & Pl, int & a, int & b){
+
+    while(TAB[a-1][b-1] != ' '){
+        cout<<"Position deja occupee !!! >:("<<endl;
+        cout<<"Joueur "<<Pl.symbol<<", entrez la Ligne "<<endl;
+        cin>>a;
+        cout<<"Joueur "<<Pl.symbol<<", entrez la Cologne "<<endl;
+        cin>>b; 
+    }
+}
 
 void playRound(char** & T, Player & P, int N){
     
     int i, j;
-    cout<<"Entrez la Ligne "<<endl;
+    cout<<"Joueur "<<P.symbol<<", entrez la Ligne "<<endl;
     cin>>i;
-    cout<<"Entrez la Cologne "<<endl;
+    cout<<"Joueur "<<P.symbol<<", entrez la Cologne "<<endl;
     cin>>j;
     
-    while(T[i-1][j-1] != ' '){
-        cout<<"Position deja occupée !!! >:("<<endl;
-    }
+    fillIfEmpty(T, P, i, j);
+
     T[i-1][j-1] = P.symbol;
     winCase(T, P, N); //did the player win ?
     afficher(T, N, N); // N represents cols and lns at once
@@ -139,20 +149,22 @@ void gameWinner(Player A, Player B){
 
 void playGame(char** & T,Player & A, Player & B, int N){
     int cpt = 0; //incrementing cpt each round
-    cout << "toto" << endl;
-    cout << A.hasWon << endl;
-    cout << B.hasWon << endl;
-    while((A.hasWon == false) && (B.hasWon == false)){
-        cout << "lolo" << endl;
+    int maxRounds = N*N;
+
+    while((A.hasWon == false) && (B.hasWon == false) && (cpt <= maxRounds)){
         if(A.isTurn == true){
           playRound(T, A, N);
+          A.isTurn = false;
+          B.isTurn = true;
         }else{
           playRound(T, B, N);
+          B.isTurn = false;
+          A.isTurn = true;
         }
         cpt += 1;
         gameWinner(A, B);
     }
-    //cpt
+    
 }
 
 
