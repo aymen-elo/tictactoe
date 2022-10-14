@@ -39,10 +39,15 @@ void selectSymbol(char & A, char & B){
     cin>>B;
 }
 
-void afficher(char** T, int cl, int ln){
+void display(char** T, int cl, int ln){
     
+    cout<<' ';
+    for(int i = 0; i < ln; i++){
+        cout<<i+1<<' ';
+    }
+    cout<<endl;
     for(int i = 0; i < ln-1; i++){
-        cout<<' ';
+        cout<<i+1;
         for(int j = 0; j < cl-1; j++){
             cout<<T[i][j]<<'|';
         }
@@ -54,7 +59,7 @@ void afficher(char** T, int cl, int ln){
         }
         cout<<endl;
     }
-    cout<<' ';
+    cout<<ln;
     for(int j = 0; j < cl-1; j++){
         cout<<T[ln-1][j]<<"|";
     }
@@ -135,7 +140,7 @@ void playRound(char** & T, Player & P, int N){
 
     T[i-1][j-1] = P.symbol;
     winCase(T, P, N); //did the player win ?
-    afficher(T, N, N); // N represents cols and lns at once
+    display(T, N, N); // N represents cols and lns at once
 }
 
 void gameWinner(Player A, Player B){
@@ -189,7 +194,7 @@ for(int i = 0; i < cols; i++){
 
 selectSymbol(p1.symbol, p2.symbol);
 emptyFill(tab, cols, lns); 
-afficher(tab, cols, lns);
+display(tab, cols, lns);
 playGame(tab, p1, p2, lns); // N=lns=cols;
 
 
@@ -204,6 +209,5 @@ delete[] tab;
 
 }
 /*
-diagonale opposée
-li,es
+
 */
