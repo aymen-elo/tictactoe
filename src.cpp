@@ -117,10 +117,10 @@ void winCase(char** T, Player & p, int N){ // N for number of rows/lines to set 
 }
 
 //checks weither a case was already checked before being inserted
-void fillIfEmpty(char** & TAB, Player & Pl, int & a, int & b){
+void fillIfCorrect(char** & TAB, Player & Pl, int & a, int & b, int N){
 
-    while(TAB[a-1][b-1] != ' '){
-        cout<<"Position deja occupee !!! >:("<<endl;
+    while((TAB[a-1][b-1] != ' ') || ((a>N && a<1) || (b>N && b<1))){
+        cout<<"Position impossible !! >:c"<<endl;
         cout<<"Joueur "<<Pl.symbol<<", entrez la Ligne "<<endl;
         cin>>a;
         cout<<"Joueur "<<Pl.symbol<<", entrez la Cologne "<<endl;
@@ -136,8 +136,8 @@ void playRound(char** & T, Player & P, int N){
     cout<<"Joueur "<<P.symbol<<", entrez la Cologne "<<endl;
     cin>>j;
     
-    fillIfEmpty(T, P, i, j);
-
+    fillIfCorrect(T, P, i, j, N);
+    
     T[i-1][j-1] = P.symbol;
     winCase(T, P, N); //did the player win ?
     display(T, N, N); // N represents cols and lns at once
