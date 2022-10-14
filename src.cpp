@@ -7,6 +7,13 @@ struct Player{
     bool hasWon;
 };
 
+void initPl(Player & A, Player & B){
+    A.isTurn = true;
+    B.isTurn = false;
+    A.hasWon = false;
+    B.hasWon = false;
+}
+
 void emptyFill(char** & T, int ln, int cl){
     for(int i = 0; i < ln; i++){
         for(int j = 0; j < cl; j++){
@@ -17,8 +24,11 @@ void emptyFill(char** & T, int ln, int cl){
 
 //fix: when size<=2
 void saisieTaille(int & cl, int & ln){
-    cout << "Morpion de taille NxN, saisir N: "<<endl;
-    cin>>cl;
+    cl = 0;
+    while(cl < 3){
+        cout << "Morpion de taille NxN, saisir N >= 3: "<<endl;
+        cin>>cl;
+    }
     ln = cl;
 }
 
@@ -30,22 +40,34 @@ void selectSymbol(char & A, char & B){
 }
 
 void afficher(char** T, int cl, int ln){
-    for(int i = 0; i < ln; i++){
-        cout<<'|';
-        for(int j = 0; j < cl; j++){
+    
+    for(int i = 0; i < ln-1; i++){
+        cout<<' ';
+        for(int j = 0; j < cl-1; j++){
             cout<<T[i][j]<<'|';
         }
-        cout<<endl;
-        cout<<'-';
-        for(int j = 0; j < cl; j++){
+        cout<<T[i][cl-1]<<endl;
+        
+        cout<<" -";
+        for(int j = 0; j < cl-1; j++){
             cout<<"--";
         }
         cout<<endl;
     }
+    cout<<' ';
+    for(int j = 0; j < cl-1; j++){
+        cout<<T[ln-1][j]<<"|";
+    }
+    cout<<T[ln-1][cl-1]<<endl;
+
 }
 
-void win(char** T, Player & p, int N){ // N for number of rows/lines to set the for loop limit
-    int verif = 0;
+void winCase(char** T, Player & p, int N){ // N for number of rows/lines to set the for loop limit
+    
+    int verif;
+
+    //lns
+    verif = 0;
     for(int j = 0; j < N; j++){
         if(T[0][j] == p.symbol){
             verif=+1;
@@ -54,6 +76,8 @@ void win(char** T, Player & p, int N){ // N for number of rows/lines to set the 
     if(verif == N){
         p.hasWon = true;
     }
+
+    //cols
     verif = 0;
     for(int i = 0; i < N; i++){
         if(T[0][i] == p.symbol){
@@ -63,8 +87,9 @@ void win(char** T, Player & p, int N){ // N for number of rows/lines to set the 
     if(verif == N){
         p.hasWon = true;
     }
-    verif = 0;
 
+    //diago gauche haut vers droit bas
+    verif = 0;
     for(int i = 0, j = 0; i < N, j < N; j++, i++){
         if(T[i][j] == p.symbol){
             verif=+1;
@@ -74,55 +99,72 @@ void win(char** T, Player & p, int N){ // N for number of rows/lines to set the 
         p.hasWon = true;
     }
 
-}
-
-//fix: find when a player has won
-void playRound(char** & T, Player A, Player B, int N){
-    if((A.hasWon == false) && (B.hasWon == false)){
-        if(A.isTurn){
-            int i, j;
-            cout<<"Joueur 1, entrez la Ligne "<<endl;
-            cin>>i;
-            cout<<"Joueur 1, entrez la Cologne "<<endl;
-            cin>>j;
-            
-            while(T[i][j] != ' '){
-                cout<<"Position deja occupée !!! >:("<<endl;
-            }
-            T[i-1][j-1] = A.symbol;
-            A.isTurn = false;
-            B.isTurn = true;
-            win(T, A, N); //did the player win ?
-            if(A.hasWon){
-                cout<<"Félicitations Joueur 1, Alias "<<A.symbol<<", c'est gagné !"<<endl;
-            }
-        }else{
-            int i, j;
-            cout<<"Joueur 2, entrez la Ligne "<<endl;
-            cin>>i;
-            cout<<"Joueur 2, entrez la Cologne "<<endl;
-            cin>>j;
-            
-            while(T[i][j] != ' '){
-                cout<<"Position deja occupee !!! >:("<<endl;
-            }
-            T[i-1][j-1] = B.symbol;
-            B.isTurn = false;
-            A.isTurn = true;
-            win(T, B, N);
-            if(A.hasWon){
-                cout<<"Félicitations Joueur 2, Alias "<<B.symbol<<", c'est gagné !"<<endl;
-            }
+    //diago gauche bas ver droit haut
+    verif = 0;
+    for(int i = N-1, j = 0; i >= 0, j < N; j++, i--){
+        if(T[i][j] == p.symbol){
+            verif=+1;
         }
     }
+    if(verif == N){
+        p.hasWon = true;
+    }
+}
+
+
+void playRound(char** & T, Player & P, int N){
+    
+    int i, j;
+    cout<<"Entrez la Ligne "<<endl;
+    cin>>i;
+    cout<<"Entrez la Cologne "<<endl;
+    cin>>j;
+    
+    while(T[i-1][j-1] != ' '){
+        cout<<"Position deja occupée !!! >:("<<endl;
+    }
+    T[i-1][j-1] = P.symbol;
+    winCase(T, P, N); //did the player win ?
     afficher(T, N, N); // N represents cols and lns at once
 }
 
+void gameWinner(Player A, Player B){
+    if(B.hasWon == true){
+        cout<<"Félicitations Joueur 2, c'est gagné !"<<endl;
+    }
+    if(A.hasWon == true){
+        cout<<"Félicitations Joueur 1, c'est gagné !"<<endl;
+    }
+}
 
+void playGame(char** & T,Player & A, Player & B, int N){
+    int cpt = 0; //incrementing cpt each round
+    cout << "toto" << endl;
+    cout << A.hasWon << endl;
+    cout << B.hasWon << endl;
+    while((A.hasWon == false) && (B.hasWon == false)){
+        cout << "lolo" << endl;
+        if(A.isTurn == true){
+          playRound(T, A, N);
+        }else{
+          playRound(T, B, N);
+        }
+        cpt += 1;
+        gameWinner(A, B);
+    }
+    //cpt
+}
+
+
+
+
+// MAIN PROGRAM
 int main(){
+
 
 Player p1, p2;
 int cols, lns;
+initPl(p1, p2);
 saisieTaille(cols, lns);
 
 //alloc
@@ -131,13 +173,12 @@ tab = new char*[cols];
 for(int i = 0; i < cols; i++){
     tab[i] = new char[lns];
 }
+
+
 selectSymbol(p1.symbol, p2.symbol);
 emptyFill(tab, cols, lns); 
 afficher(tab, cols, lns);
-
-// cols or lns, they have the same value
-p1.isTurn == true;
-playRound(tab, p1, p2, cols); 
+playGame(tab, p1, p2, lns); // N=lns=cols;
 
 
 
@@ -150,3 +191,7 @@ delete[] tab;
 
 
 }
+/*
+diagonale opposée
+li,es
+*/
