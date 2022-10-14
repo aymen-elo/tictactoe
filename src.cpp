@@ -67,53 +67,58 @@ void display(char** T, int cl, int ln){
 
 }
 
-void winCase(char** T, Player & p, int N){ // N for number of rows/lines to set the for loop limit
+//FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME
+void winCases(char** & T, Player Pl, int N){
     
-    int verif;
-
-    //lns
-    verif = 0;
-    for(int j = 0; j < N; j++){
-        if(T[0][j] == p.symbol){
-            verif=+1;
-        }
-    }
-    if(verif == N){
-        p.hasWon = true;
-    }
-
-    //cols
-    verif = 0;
+    int cpt=0;
+    //lines verification
     for(int i = 0; i < N; i++){
-        if(T[0][i] == p.symbol){
-            verif=+1;
+        for(int j = 0; j < N; j++){
+            if(T[i][j] == Pl.symbol){
+                cpt+=1;
+            }
         }
+        if(cpt == N){
+            Pl.hasWon = true;
+        }
+        cpt=0;
     }
-    if(verif == N){
-        p.hasWon = true;
+    cout<<"Blabla"<<endl;
+    //columns
+    for(int j = 0; j < N; j++){
+        for(int i = 0; i < N; i++){
+            if(T[i][j] == Pl.symbol){
+                cpt+=1;
+            }
+        }
+        if(cpt == N){
+            Pl.hasWon = true;
+        }
+        cpt=0;
     }
 
-    //diago gauche haut vers droit bas
-    verif = 0;
-    for(int i = 0, j = 0; i < N, j < N; j++, i++){
-        if(T[i][j] == p.symbol){
-            verif=+1;
+    //diagonal from upper left
+    for(int i = 0, j = 0; i<N, j<N; i++, j++){
+        if(T[i][j] == Pl.symbol){
+            cpt+=1;
         }
-    }
-    if(verif == N){
-        p.hasWon = true;
+        if(cpt == N){
+            Pl.hasWon = true;
+        }
+        cpt=0;
     }
 
-    //diago gauche bas ver droit haut
-    verif = 0;
-    for(int i = N-1, j = 0; i >= 0, j < N; j++, i--){
-        if(T[i][j] == p.symbol){
-            verif=+1;
+    //diagonal from lower left
+    for(int i = N-1, j = 0; i>=0, j<N; i--, j++){
+        if(T[i][j] == Pl.symbol){
+            cpt+=1;
         }
+        if(cpt == N){
+            Pl.hasWon = true;
+        }
+        cpt=0;
     }
-    if(verif == N){
-        p.hasWon = true;
-    }
+
 }
 
 //checks weither a case was already checked before being inserted
@@ -123,7 +128,7 @@ void fillIfCorrect(char** & TAB, Player & Pl, int & a, int & b, int N){
         cout<<"Position impossible !! >:c"<<endl;
         cout<<"Joueur "<<Pl.symbol<<", entrez la Ligne "<<endl;
         cin>>a;
-        cout<<"Joueur "<<Pl.symbol<<", entrez la Cologne "<<endl;
+        cout<<"Joueur "<<Pl.symbol<<", entrez la Colonne "<<endl;
         cin>>b; 
     }
 }
@@ -133,13 +138,12 @@ void playRound(char** & T, Player & P, int N){
     int i, j;
     cout<<"Joueur "<<P.symbol<<", entrez la Ligne "<<endl;
     cin>>i;
-    cout<<"Joueur "<<P.symbol<<", entrez la Cologne "<<endl;
+    cout<<"Joueur "<<P.symbol<<", entrez la Colonne "<<endl;
     cin>>j;
     
     fillIfCorrect(T, P, i, j, N);
-    
+    winCases(T, P, N); // FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXMEFIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME
     T[i-1][j-1] = P.symbol;
-    winCase(T, P, N); //did the player win ?
     display(T, N, N); // N represents cols and lns at once
 }
 
@@ -167,8 +171,19 @@ void playGame(char** & T,Player & A, Player & B, int N){
           A.isTurn = true;
         }
         cpt += 1;
+        cout<<A.hasWon<<endl;
+        cout<<B.hasWon<<endl;
+    }
+    //FIXME
+    if((A.hasWon == false) && (B.hasWon == false)){
+        cout<<maxRounds<<endl;
+        cout<<"MATCH NUL :/"<<endl;
+    }else{
         gameWinner(A, B);
     }
+    cout<<A.hasWon<<endl;
+    cout<<B.hasWon<<endl;
+    
     
 }
 
