@@ -41,29 +41,29 @@ void selectSymbol(char & A, char & B){
 
 void display(char** T, int cl, int ln){
     
-    cout<<' ';
+    cout<<"   ";
     for(int i = 0; i < ln; i++){
-        cout<<i+1<<' ';
+        cout<<i+1<<"   ";
     }
     cout<<endl;
     for(int i = 0; i < ln-1; i++){
-        cout<<i+1;
+        cout<<i+1<<' ';
         for(int j = 0; j < cl-1; j++){
-            cout<<T[i][j]<<'|';
+            cout<<' '<<T[i][j]<<' '<<'|';
         }
-        cout<<T[i][cl-1]<<endl;
+        cout<<' '<<T[i][cl-1]<<endl;
         
         cout<<" -";
-        for(int j = 0; j < cl-1; j++){
-            cout<<"--";
+        for(int j = 0; j < cl; j++){
+            cout<<"----";
         }
         cout<<endl;
     }
-    cout<<ln;
+    cout<<ln<<' ';
     for(int j = 0; j < cl-1; j++){
-        cout<<T[ln-1][j]<<"|";
+        cout<<' '<<T[ln-1][j]<<' '<<"|";
     }
-    cout<<T[ln-1][cl-1]<<endl;
+    cout<<' '<<T[ln-1][cl-1]<<endl;
 
 }
 
@@ -140,7 +140,7 @@ void playRound(char** & T, Player & P, int N){
     cin>>j;
     
     fillIfCorrect(T, P, i, j, N);
-    winCases(T, P, N); // FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXMEFIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME
+    winCases(T, P, N);
     T[i-1][j-1] = P.symbol;
     display(T, N, N); // N represents cols and lns at once
 }
