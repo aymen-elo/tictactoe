@@ -41,24 +41,32 @@ void selectSymbol(char & A, char & B){
 
 void display(char** T, int cl, int ln){
     
+    //Horizontal Indexes
     cout<<"   ";
     for(int i = 0; i < ln; i++){
         cout<<i+1<<"   ";
     }
     cout<<endl;
+    
+    
     for(int i = 0; i < ln-1; i++){
+        
+        //Symbols & Vertical: Indexes + Separations
         cout<<i+1<<' ';
         for(int j = 0; j < cl-1; j++){
             cout<<' '<<T[i][j]<<' '<<'|';
         }
         cout<<' '<<T[i][cl-1]<<endl;
         
+        //Horizontal Separation
         cout<<" -";
         for(int j = 0; j < cl; j++){
             cout<<"----";
         }
         cout<<endl;
     }
+
+    //Last line
     cout<<ln<<' ';
     for(int j = 0; j < cl-1; j++){
         cout<<' '<<T[ln-1][j]<<' '<<"|";
@@ -70,7 +78,7 @@ void display(char** T, int cl, int ln){
 void winCases(char** & T, Player & Pl, int N){
     
     int cpt=1;
-    //lines verification
+    //lines
     for(int i = 0; i < N; i++){
         for(int j = 0; j < N; j++){
             if(T[i][j] == Pl.symbol){
@@ -170,7 +178,8 @@ void playGame(char** & T,Player & A, Player & B, int N){
         }
         cpt += 1;
     }
-    //FIXME: gameWinner part
+    
+    //Either a winner or draw match
     if((A.hasWon == false) && (B.hasWon == false)){
         cout<<"MATCH NUL :/"<<endl;
     }else{
@@ -216,6 +225,3 @@ delete[] tab;
 
 
 }
-/*
-
-*/
