@@ -67,10 +67,9 @@ void display(char** T, int cl, int ln){
 
 }
 
-//FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME FIXME
-void winCases(char** & T, Player Pl, int N){
+void winCases(char** & T, Player & Pl, int N){
     
-    int cpt=0;
+    int cpt=1;
     //lines verification
     for(int i = 0; i < N; i++){
         for(int j = 0; j < N; j++){
@@ -81,9 +80,9 @@ void winCases(char** & T, Player Pl, int N){
         if(cpt == N){
             Pl.hasWon = true;
         }
-        cpt=0;
+        cpt=1;
     }
-    cout<<"Blabla"<<endl;
+    
     //columns
     for(int j = 0; j < N; j++){
         for(int i = 0; i < N; i++){
@@ -94,7 +93,7 @@ void winCases(char** & T, Player Pl, int N){
         if(cpt == N){
             Pl.hasWon = true;
         }
-        cpt=0;
+        cpt=1;
     }
 
     //diagonal from upper left
@@ -105,8 +104,9 @@ void winCases(char** & T, Player Pl, int N){
         if(cpt == N){
             Pl.hasWon = true;
         }
-        cpt=0;
     }
+    //cpt reinitalized outside of the loop because there is one only primary diagonal
+    cpt=1;
 
     //diagonal from lower left
     for(int i = N-1, j = 0; i>=0, j<N; i--, j++){
@@ -116,9 +116,7 @@ void winCases(char** & T, Player Pl, int N){
         if(cpt == N){
             Pl.hasWon = true;
         }
-        cpt=0;
     }
-
 }
 
 //checks weither a case was already checked before being inserted
@@ -149,10 +147,10 @@ void playRound(char** & T, Player & P, int N){
 
 void gameWinner(Player A, Player B){
     if(B.hasWon == true){
-        cout<<"Félicitations Joueur 2, c'est gagné !"<<endl;
+        cout<<"Felicitations Joueur 2, c'est gagne !"<<endl;
     }
     if(A.hasWon == true){
-        cout<<"Félicitations Joueur 1, c'est gagné !"<<endl;
+        cout<<"Felicitations Joueur 1, c'est gagne !"<<endl;
     }
 }
 
@@ -160,7 +158,7 @@ void playGame(char** & T,Player & A, Player & B, int N){
     int cpt = 0; //incrementing cpt each round
     int maxRounds = N*N;
 
-    while((A.hasWon == false) && (B.hasWon == false) && (cpt <= maxRounds)){
+    while((A.hasWon == false) && (B.hasWon == false) && (cpt < maxRounds)){
         if(A.isTurn == true){
           playRound(T, A, N);
           A.isTurn = false;
@@ -171,18 +169,13 @@ void playGame(char** & T,Player & A, Player & B, int N){
           A.isTurn = true;
         }
         cpt += 1;
-        cout<<A.hasWon<<endl;
-        cout<<B.hasWon<<endl;
     }
-    //FIXME
+    //FIXME: gameWinner part
     if((A.hasWon == false) && (B.hasWon == false)){
-        cout<<maxRounds<<endl;
         cout<<"MATCH NUL :/"<<endl;
     }else{
         gameWinner(A, B);
     }
-    cout<<A.hasWon<<endl;
-    cout<<B.hasWon<<endl;
     
     
 }
